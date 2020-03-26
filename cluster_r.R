@@ -4,15 +4,8 @@ dir()
 setwd("/home/gabriel.gomes/r_cluster")
 
 
-#### 1.1 Introdução a cluster ####
-#teoria
-#### 1.2 Entendendo os centroídes ####
-#teoria
+#### 1.2 Conhecendo a base de dados/ Definindo o problema ####
 
-#### 2. Conhecendo e preparando os dados ####
-
-#### 2.1 Conhecendo a base de dados ####
-## lendo os dados
 filmes <- read.csv('movies.csv',stringsAsFactors = F)
 View(filmes)
 
@@ -33,12 +26,8 @@ filmes_transf <- filmes_transf %>%
 dados_normalizados <- scale(filmes_transf)
 dados_normalizados <- data.frame(dados_normalizados)
 
-
-#### 3. KMEANS CLUSTER ####
-#### 3.1 Entendendo o algoritmos Kmeans ####
-#Teoria
-
-#### 3.2 Criando Cluster com R ####
+#### 3. Kmeans no R ####
+#### 3.1 Criando Cluster com R ####
 set.seed(1987) #função pra gerar resultados iguais
 
 ## criando cluster para 3 agrupamentos
@@ -66,7 +55,7 @@ resultado_cluster$betweenss
 ## tamanho de cada cluster
 resultado_cluster$size
 
-#### 3.3 Plotando os clusters ####
+#### 3.2 Plotando os clusters ####
 
 ## criando visualização dos cluster com o pacote 'cluster'
 #install.packages("cluster")
@@ -79,6 +68,8 @@ clusplot(x = dados_normalizados, resultado_cluster$cluster, color=TRUE, shade=TR
 library(fpc)
 plotcluster(x = dados_normalizados, resultado_cluster$cluster,ignorenum = T)
 
+
+#### 3.3 Visualizando Generos nos Clusters(agrupamentos) ####
 
 ## criando gráficos com os centros
 centros <- resultado_cluster$centers
@@ -97,7 +88,6 @@ library(ggplot2)
 ggplot(data = centros_2 ) + 
   geom_bar(aes(x = genero,y = centro,fill = cluster),stat = 'identity') + 
   facet_grid(cluster ~ .)
-
 
 #### 4. ESCOLHENDO O MELHOR NÚMERO K####
 
@@ -144,7 +134,7 @@ axis(side=1,at=range_k, labels=range_k)
 abline(v=12,col="red")
 
 
-#### 4.3 Criando Cluster Final ####
+#### 4.3 Criando recomendação de filmes ####
 set.seed(1987) #função pra gerar resultados iguais
 
 ## criando cluster para 10 agrupamentos
@@ -172,12 +162,12 @@ agrupamento <- filmes[filmes$title == 'Toy Story (1995)','cluster']
 agrupamento
 
 ## selecinando 10 filmes dentro do cluster
-filmes[filmes$cluster == agrupamento, 'title'] %>% sample(10)
+filmes[filmes$cluster == agrupamento, 'title'] %>% 
+  sample(10)
 
 #### 5. CLUSTER HIERARQUICO ####
-#### 5.1 Entendendo o Cluster Hierarquico ####
+#### 5.1 Construindo um cluster hierarquico ####
 
-#### 5.2 Construindo o Cluster Hierarquico ####
 set.seed(1987) # não altere para que seu resultados correspondam igual ao demosntrado na aula
 matriz_dist <- dist(centros) #method = "euclidean"  # matrix de distância
 matriz_dist
@@ -189,5 +179,4 @@ clust_h <- hclust(matriz_dist) #, method = "complete")
 plot(clust_h)
 plot(clust_h,hang = -1)
 
-# inserindo bordas vermelhas no dendograma sobre os clusters 
-rect.hclust(clust_h, k=6, border="red")
+
