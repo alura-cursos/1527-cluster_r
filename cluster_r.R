@@ -173,3 +173,21 @@ agrupamento
 
 ## selecinando 10 filmes dentro do cluster
 filmes[filmes$cluster == agrupamento, 'title'] %>% sample(10)
+
+#### 5. CLUSTER HIERARQUICO ####
+#### 5.1 Entendendo o Cluster Hierarquico ####
+
+#### 5.2 Construindo o Cluster Hierarquico ####
+set.seed(1987) # não altere para que seu resultados correspondam igual ao demosntrado na aula
+matriz_dist <- dist(centros) #method = "euclidean"  # matrix de distância
+matriz_dist
+
+## criando objeto de cluster hierarquico 
+clust_h <- hclust(matriz_dist) #, method = "complete")
+
+## grafico com o cluster hierarquico
+plot(clust_h)
+plot(clust_h,hang = -1)
+
+# inserindo bordas vermelhas no dendograma sobre os clusters 
+rect.hclust(clust_h, k=6, border="red")
