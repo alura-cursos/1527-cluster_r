@@ -4,15 +4,8 @@ dir()
 setwd("/home/gabriel.gomes/r_cluster")
 
 
-#### 1.1 Introdução a cluster ####
-#teoria
-#### 1.2 Entendendo os centroídes ####
-#teoria
+#### 1.2 Conhecendo a base de dados/ Definindo o problema ####
 
-#### 2. Conhecendo e preparando os dados ####
-
-#### 2.1 Conhecendo a base de dados ####
-## lendo os dados
 filmes <- read.csv('movies.csv',stringsAsFactors = F)
 View(filmes)
 
@@ -33,12 +26,8 @@ filmes_transf <- filmes_transf %>%
 dados_normalizados <- scale(filmes_transf)
 dados_normalizados <- data.frame(dados_normalizados)
 
-
-#### 3. KMEANS CLUSTER ####
-#### 3.1 Entendendo o algoritmos Kmeans ####
-#Teoria
-
-#### 3.2 Criando Cluster com R ####
+#### 3. Kmeans no R ####
+#### 3.1 Criando Cluster com R ####
 set.seed(1987) #função pra gerar resultados iguais
 
 ## criando cluster para 3 agrupamentos
@@ -66,7 +55,7 @@ resultado_cluster$betweenss
 ## tamanho de cada cluster
 resultado_cluster$size
 
-#### 3.3 Plotando os clusters ####
+#### 3.2 Plotando os clusters ####
 
 ## criando visualização dos cluster com o pacote 'cluster'
 #install.packages("cluster")
@@ -79,6 +68,8 @@ clusplot(x = dados_normalizados, resultado_cluster$cluster, color=TRUE, shade=TR
 library(fpc)
 plotcluster(x = dados_normalizados, resultado_cluster$cluster,ignorenum = T)
 
+
+#### 3.3 Visualizando Generos nos Clusters(agrupamentos) ####
 
 ## criando gráficos com os centros
 centros <- resultado_cluster$centers
