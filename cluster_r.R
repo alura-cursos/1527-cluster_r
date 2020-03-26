@@ -4,15 +4,8 @@ dir()
 setwd("/home/gabriel.gomes/r_cluster")
 
 
-#### 1.1 Introdução a cluster ####
-#teoria
-#### 1.2 Entendendo os centroídes ####
-#teoria
+#### 1.2 Conhecendo a base de dados/ Definindo o problema ####
 
-#### 2. Conhecendo e preparando os dados ####
-
-#### 2.1 Conhecendo a base de dados ####
-## lendo os dados
 filmes <- read.csv('movies.csv',stringsAsFactors = F)
 View(filmes)
 
